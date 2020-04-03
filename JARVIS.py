@@ -55,7 +55,7 @@ def takeCommand():
 def Wake_Command():
     r = sr.Recognizer()
     with sr.Microphone() as source:
-        print("Call to wake me up")
+        speak("Speak your identity!")
         print("Listening...")
         r.pause_threshold = 1
         audio = r.listen(source, timeout= 100)

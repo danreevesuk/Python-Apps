@@ -66,8 +66,6 @@ def Wake_Command():
         print(query)
 
     except Exception as e:   
-        print("You have failed to trigger me...")
-        speak("Intruder!!! Going offline now.. good bye")
         return "None"
     return query
 

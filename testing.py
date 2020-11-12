@@ -1,0 +1,31 @@
+import time
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+
+driver = webdriver.Chrome('C:\\Users\\AA\\Desktop\\chromedriver.exe')
+driver.maximize_window()
+driver.get('https://www.snaxa.com/uae/restaurant/100/foods-inn-')
+search_box = driver.find_element_by_class_name("location-search-input")
+search_box.send_keys('Al Sarayat St')
+time.sleep(2) 
+search_box.send_keys(Keys.ENTER)
+time.sleep(2) 
+driver.find_element_by_link_text("Sorry, this brand doesn't deliver here").click()
+time.sleep(10) 
+driver.find_element_by_css_selector('div.CategoriesList_CategoryView__Container__3Wf33').click()
+time.sleep(2) 
+driver.find_element_by_css_selector('div.radiocontrol_indicator').click()
+driver.find_element_by_tag_name('textarea').send_keys('HA HA HA! I AM A BOT SEND ME FOOOOD')
+time.sleep(3) 
+driver.find_element_by_css_selector("button.button.button--default.undefined.undefined").click()
+driver.find_element_by_link_text("LOGIN TO CHECKOUT").click()
+time.sleep(2) 
+email= driver.find_element_by_id("email").send_keys('sma3797@gmail.com')
+password = driver.find_element_by_id("password").send_keys('asdasd') 
+time.sleep(6) 
+driver.find_element_by_css_selector("button.button.button--default.undefined.undefined").click()
+time.sleep(5) 
+driver.find_element_by_class_name('DeliveryAddress_SavedCards__2mAqG').click()
+time.sleep(5) 
+driver.find_element_by_css_selector("div.Subtotal_Subtotal_Button__atNYU").click()

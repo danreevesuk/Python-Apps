@@ -181,8 +181,8 @@ def main(item, name):
     p.paragraph_format.space_before = Pt(0)
 
 
-    doc.save(order_number+" "+name+'.docx')
-    inputFile  = order_number+" "+name+".docx"
+    doc.save("generated_files/"+order_number+" "+name+'.docx')
+    inputFile  = "generated_files/"+order_number+" "+name+".docx"
     convert(inputFile)
 
 def generate_certificate(file):
@@ -193,12 +193,12 @@ def generate_certificate(file):
             # Loop added to work with runs (strings with same style)
             for i in range(len(inline)):
                 if 'Name' in inline[i].text:
-                    text = inline[i].text.replace('Name', name)
+                    text = inline[i].text.replace('Name', item+" "+name)
                     inline[i].text = text
             print (p.text)
 
-    doc.save("Certificate "+order_number+" "+name+'.docx')
-    inputFile_cert  = "Certificate " +order_number+" "+name+".docx"
+    doc.save("generated_files/"+"Certificate "+order_number+" "+name+'.docx')
+    inputFile_cert  = "generated_files/"+"Certificate " +order_number+" "+name+".docx"
     convert(inputFile_cert)
 
 

@@ -235,7 +235,7 @@ for i in range(len(product)):
     if 'Lord Title' in product:
         item = 'Lord'
         name = new['line_items'][0]['properties'][0]['value']
-        name = name.title()
+        name = name.title().rstrip()
         if len(name)>19:
             main(item, name)
             generate_certificate("lord-long.docx")
@@ -247,7 +247,7 @@ for i in range(len(product)):
     elif 'Lady Title' in product:
         item = 'Lady'
         name = new['line_items'][0]['properties'][0]['value']
-        name = name.title()
+        name = name.title().rstrip()
         if len(name)>19:
             main(item, name)
             generate_certificate("lady-long.docx")
@@ -259,7 +259,7 @@ for i in range(len(product)):
     elif 'Lord & Lady' in product:
         item = 'Lady'
         name = new['line_items'][0]['properties'][0]['value']
-        name = name.title()
+        name = name.title().rstrip()
         if len(name)>19:
             main(item, name)
             generate_certificate("lady-long.docx")
@@ -272,7 +272,7 @@ for i in range(len(product)):
         
         item = 'Lord'
         name = new['line_items'][0]['properties'][1]['value']
-        name = name.title()
+        name = name.title().rstrip()
         if len(name)>19:
             main(item, name)
             generate_certificate("lord-long.docx")
@@ -285,7 +285,7 @@ for i in range(len(product)):
     elif 'Baron Title' in product:
         item = 'Baron'
         name = new['line_items'][0]['properties'][0]['value']
-        name = name.title()
+        name = name.title().rstrip()
         if len(name)>19:
             main(item, name)
             generate_certificate("lord-long.docx")
@@ -297,7 +297,7 @@ for i in range(len(product)):
     elif 'Baroness Title' in product:
         item = 'Baroness'
         name = new['line_items'][0]['properties'][0]['value']
-        name = name.title()
+        name = name.title().rstrip()
         if len(name)>19:
             main(item, name)
             generate_certificate("lady-long.docx")
@@ -309,7 +309,7 @@ for i in range(len(product)):
     elif 'Baron & Baroness' in product:
         item = 'Baroness'
         name = new['line_items'][0]['properties'][0]['value']
-        name = name.title()
+        name = name.title().rstrip()
         if len(name)>19:
             main(item, name)
             generate_certificate("lady-long.docx")
@@ -322,7 +322,7 @@ for i in range(len(product)):
         
         item = 'Baron'
         name = new['line_items'][0]['properties'][1]['value']
-        name = name.title()
+        name = name.title().rstrip()
         if len(name)>19:
             main(item, name)
             generate_certificate("lord-long.docx")
@@ -341,7 +341,7 @@ for i in range(len(product)):
             if 'Lord Title' in product2:
                 item = 'Lord'
                 name = new['line_items'][1]['properties'][0]['value']
-                name = name.title()
+                name = name.title().rstrip()
                 if len(name)>19:
                     main(item, name)
                     generate_certificate("lord-long.docx")
@@ -353,7 +353,7 @@ for i in range(len(product)):
             elif 'Lady Title' in product2:
                 item = 'Lady'
                 name = new['line_items'][1]['properties'][0]['value']
-                name = name.title()
+                name = name.title().rstrip()
                 if len(name)>19:
                     main(item, name)
                     generate_certificate("lady-long.docx")
@@ -366,7 +366,7 @@ for i in range(len(product)):
             elif 'Lord & Lady' in product2:
                 item = 'Lady'
                 name = new['line_items'][1]['properties'][0]['value']
-                name = name.title()
+                name = name.title().rstrip()
                 if len(name)>19:
                     main(item, name)
                     generate_certificate("lady-long.docx")
@@ -379,7 +379,7 @@ for i in range(len(product)):
                 
                 item = 'Lord'
                 name = new['line_items'][1]['properties'][1]['value']
-                name = name.title()
+                name = name.title().rstrip()
                 if len(name)>19:
                     main(item, name)
                     generate_certificate("lord-long.docx")
@@ -393,7 +393,7 @@ for i in range(len(product)):
             elif 'Baron Title' in product2:
                 item = 'Baron'
                 name = new['line_items'][1]['properties'][0]['value']
-                name = name.title()
+                name = name.title().rstrip()
                 if len(name)>19:
                     main(item, name)
                     generate_certificate("lord-long.docx")
@@ -405,7 +405,7 @@ for i in range(len(product)):
             elif 'Baroness Title' in product2:
                 item = 'Baroness'
                 name = new['line_items'][1]['properties'][0]['value']
-                name = name.title()
+                name = name.title().rstrip()
                 if len(name)>19:
                     main(item, name)
                     generate_certificate("lady-long.docx")
@@ -418,7 +418,7 @@ for i in range(len(product)):
             elif 'Baron & Baroness' in product2:
                 item = 'Baroness'
                 name = new['line_items'][1]['properties'][0]['value']
-                name = name.title()
+                name = name.title().rstrip()
                 if len(name)>19:
                     main(item, name)
                     generate_certificate("lady-long.docx")
@@ -431,7 +431,7 @@ for i in range(len(product)):
                 
                 item = 'Baron'
                 name = new['line_items'][1]['properties'][1]['value']
-                name = name.title()
+                name = name.title().rstrip()
                 if len(name)>19:
                     main(item, name)
                     generate_certificate("lord-long.docx")

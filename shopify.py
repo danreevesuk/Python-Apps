@@ -8,6 +8,11 @@ from docx2pdf import convert
 from docx import Document
 
 
+res = requests.get('https://8fa5930845f0b60d4b07950dc66ba546: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@prestige-titles.myshopify.com/admin/api/2021-10/orders.json?fulfillment_status=unfullfilled&limit=200')
+
+
+response = json.loads(res.text)
+product = response['orders']
 
     
 def main(item, name):    
@@ -19,10 +24,12 @@ def main(item, name):
         section.bottom_margin = Inches(0.5)
         section.left_margin = Inches(1)
         section.right_margin = Inches(1)
+        section.page_height  = Inches(11.7)
+        section.page_width = Inches(8.3)
 
 
 
-    Main_Heading = doc.add_heading().add_run("                                                        Master Title Deed")
+    Main_Heading = doc.add_heading().add_run("                                                       Master Title Deed")
     Main_Heading.alignment = 1
     font = Main_Heading.font
     font.color.rgb = RGBColor(0,0,0)
@@ -72,17 +79,22 @@ def main(item, name):
 
 
 
-    Head_Break=doc.add_paragraph("____________________________________________________________________________________")
+    Head_Break=doc.add_paragraph("_________________________________________________________________________________")
     Head_Break.space_before = Pt(0)
+    Head_Break.space_after = Pt(0)
     Head_Break.alignment = 1
 
     starting7 = doc.add_paragraph("Address")
     starting7.alignment = 1
     starting7.space_before = Pt(0)
+    starting7.space_after = Pt(0)
+
 
     starting8 = doc.add_paragraph("HEREBY DECLARE AS FOLLOWS:")
     starting8.alignment = 0
     starting8.space_before = Pt(0)
+    starting8.space_after = Pt(0)
+
 
 
     starting9 = doc.add_paragraph("1. 	I ABSOLUTELY and entirely renounce, relinquish and abandon the use of my former name of  "+name+" and assume, adopt and determine to take and use from the date hereof the name and title of " + item + " "+ name+" in substitution for my former name of "+name+".")
@@ -117,12 +129,12 @@ def main(item, name):
 
     row0=table.add_row().cells
     p=row0[0].add_paragraph('SIGNED AS A DEED AND DELIVERED \n by the above named')
-    p.paragraph_format.space_after = Pt(0)
     p.paragraph_format.space_before = Pt(0)
+    p.paragraph_format.space_after = Pt(0)
     p.alignment=WD_ALIGN_PARAGRAPH.LEFT
     p=row0[1].add_paragraph('In the presence of:')
+    p.paragraph_format.space_before = Pt(0) 
     p.paragraph_format.space_after = Pt(0)
-    p.paragraph_format.space_before = Pt(0)
 
 
     p.alignment=WD_ALIGN_PARAGRAPH.LEFT
@@ -130,60 +142,62 @@ def main(item, name):
 
     row1=table.add_row().cells
     p=row1[0].add_paragraph('_____________________________')
-    p.paragraph_format.space_after = Pt(0)
     p.paragraph_format.space_before = Pt(0)
+    p.paragraph_format.space_after = Pt(0)
     p.alignment=WD_ALIGN_PARAGRAPH.CENTER
     p=row1[1].add_paragraph('Name ___________________________________')
     p.alignment=WD_ALIGN_PARAGRAPH.CENTER
-    p.paragraph_format.space_after = Pt(0)
     p.paragraph_format.space_before = Pt(0)
+    p.paragraph_format.space_after = Pt(0)
 
     row2=table.add_row().cells
     p=row2[0].add_paragraph(item+ " "+name)
-    p.paragraph_format.space_after = Pt(0)
     p.paragraph_format.space_before = Pt(0)
+    p.paragraph_format.space_after = Pt(0)
     p.alignment=WD_ALIGN_PARAGRAPH.CENTER
     p=row2[1].add_paragraph("Witness's signature ________________________")
     p.alignment=WD_ALIGN_PARAGRAPH.CENTER
-    p.paragraph_format.space_after = Pt(0)
     p.paragraph_format.space_before = Pt(0)
+    p.paragraph_format.space_after = Pt(0)
 
     row3=table.add_row().cells
     p=row3[0].add_paragraph("Formerly known as")
-    p.paragraph_format.space_after = Pt(0)
     p.paragraph_format.space_before = Pt(0)
+    p.paragraph_format.space_after = Pt(0)
     p.alignment=WD_ALIGN_PARAGRAPH.LEFT
     p=row3[1].add_paragraph("Address _________________________________")
     p.alignment=WD_ALIGN_PARAGRAPH.CENTER
-    p.paragraph_format.space_after = Pt(0)
     p.paragraph_format.space_before = Pt(0)
+    p.paragraph_format.space_after = Pt(0)
 
 
     row4=table.add_row().cells
     p=row4[0].add_paragraph('_____________________________')
     p.alignment=WD_ALIGN_PARAGRAPH.CENTER
-    p.paragraph_format.space_after = Pt(0)
     p.paragraph_format.space_before = Pt(0)
+    p.paragraph_format.space_after = Pt(0)
     p=row4[1].add_paragraph('_________________________________________')
     p.alignment=WD_ALIGN_PARAGRAPH.CENTER
-    p.paragraph_format.space_after = Pt(0)
     p.paragraph_format.space_before = Pt(0)
+    p.paragraph_format.space_after = Pt(0)
 
 
     row5=table.add_row().cells
     p=row5[0].add_paragraph(name)
     p.alignment=WD_ALIGN_PARAGRAPH.CENTER
-    p.paragraph_format.space_after = Pt(0)
     p.paragraph_format.space_before = Pt(0)
+    p.paragraph_format.space_after = Pt(0)
     p=row5[1].add_paragraph('Occupation ______________________________')
     p.alignment=WD_ALIGN_PARAGRAPH.CENTER
-    p.paragraph_format.space_after = Pt(0)
     p.paragraph_format.space_before = Pt(0)
+    p.paragraph_format.space_after = Pt(0)
 
 
     doc.save("generated_files/"+order_number+" "+name+'.docx')
     inputFile  = "generated_files/"+order_number+" "+name+".docx"
     convert(inputFile)
+
+
 
 def generate_certificate(file):
     doc = Document(file)
@@ -193,7 +207,7 @@ def generate_certificate(file):
             # Loop added to work with runs (strings with same style)
             for i in range(len(inline)):
                 if 'Name' in inline[i].text:
-                    text = inline[i].text.replace('Name', item+" "+name)
+                    text = inline[i].text.replace('Name', " "+item+" "+name)
                     inline[i].text = text
             print (p.text)
 
@@ -204,50 +218,233 @@ def generate_certificate(file):
 
     return 1
 
-while True:
-    time.sleep(300)
 
-    res = requests.get('https://8fa5930845f0b60d4b07950dc66ba546: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@prestige-titles.myshopify.com/admin/api/2021-10/orders.json?limit=1')
-    # res = requests.get('https://8fa5930845f0b60d4b07950dc66ba546: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@prestige-titles.myshopify.com/admin/api/2021-10/orders/3805879926993.json')
+for i in range(len(product)):
 
-    response = json.loads(res.text)
+    find_product = response['orders']
+    new  = find_product[i]
+    product = new['line_items'][0]['name']
+    
 
-    product = response['orders'][0]['line_items'][0]['name']
     # product = response['order']['line_items'][0]['name']
     print(product)
-    order_number = response['orders'][0]['order_number']
+    order_number = new['order_number']
     order_number = str(order_number)
 
 
     if 'Lord Title' in product:
         item = 'Lord'
-        name = response['orders'][0]['line_items'][0]['properties'][0]['value']
+        name = new['line_items'][0]['properties'][0]['value']
         name = name.title()
-        main(item, name)
-        generate_certificate("lord.docx")
-        print("Lord")
+        if len(name)>19:
+            main(item, name)
+            generate_certificate("lord-long.docx")
+            print("Lord")
+        else:
+            main(item, name)
+            generate_certificate("lord.docx")
+            print("Lord")
     elif 'Lady Title' in product:
         item = 'Lady'
-        name = response['orders'][0]['line_items'][0]['properties'][0]['value']
+        name = new['line_items'][0]['properties'][0]['value']
         name = name.title()
-        generate_certificate("lady.docx")
-        main(item, name)
-        print("Lady")
+        if len(name)>19:
+            main(item, name)
+            generate_certificate("lady-long.docx")
+            print("Lady")
+        else:
+            main(item, name)
+            generate_certificate("lady.docx")
+            print("Lady")
     elif 'Lord & Lady' in product:
         item = 'Lady'
-        name = response['orders'][0]['line_items'][0]['properties'][0]['value']
+        name = new['line_items'][0]['properties'][0]['value']
         name = name.title()
-        print(name)
-        main(item , name)
-        generate_certificate("lady.docx")
+        if len(name)>19:
+            main(item, name)
+            generate_certificate("lady-long.docx")
+            print("Lady")
+        else:
+            main(item, name)
+            generate_certificate("lady.docx")
+            print("Lady")
 
         
         item = 'Lord'
-        name = response['orders'][0]['line_items'][0]['properties'][1]['value']
+        name = new['line_items'][0]['properties'][1]['value']
         name = name.title()
-        print(name)
-        main(item, name)
-        generate_certificate("lord.docx")
+        if len(name)>19:
+            main(item, name)
+            generate_certificate("lord-long.docx")
+            print("Lord")
+        else:
+            main(item, name)
+            generate_certificate("lord.docx")
+            print("Lord")
+
+    elif 'Baron Title' in product:
+        item = 'Baron'
+        name = new['line_items'][0]['properties'][0]['value']
+        name = name.title()
+        if len(name)>19:
+            main(item, name)
+            generate_certificate("lord-long.docx")
+            print("Baron")
+        else:
+            main(item, name)
+            generate_certificate("lord.docx")
+            print("Baron")
+    elif 'Baroness Title' in product:
+        item = 'Baroness'
+        name = new['line_items'][0]['properties'][0]['value']
+        name = name.title()
+        if len(name)>19:
+            main(item, name)
+            generate_certificate("lady-long.docx")
+            print("Baroness")
+        else:
+            main(item, name)
+            generate_certificate("lady.docx")
+            print("Lady")
+    elif 'Baron & Baroness' in product:
+        item = 'Baroness'
+        name = new['line_items'][0]['properties'][0]['value']
+        name = name.title()
+        if len(name)>19:
+            main(item, name)
+            generate_certificate("lady-long.docx")
+            print("Baroness")
+        else:
+            main(item, name)
+            generate_certificate("lady.docx")
+            print("Baroness")
+
+        
+        item = 'Baron'
+        name = new['line_items'][0]['properties'][1]['value']
+        name = name.title()
+        if len(name)>19:
+            main(item, name)
+            generate_certificate("lord-long.docx")
+            print("Baron")
+        else:
+            main(item, name)
+            generate_certificate("lord.docx")
+            print("Baron")
 
 
+    else:
+        try:
+            product2 = new['line_items'][1]['name']
+
+
+            if 'Lord Title' in product2:
+                item = 'Lord'
+                name = new['line_items'][1]['properties'][0]['value']
+                name = name.title()
+                if len(name)>19:
+                    main(item, name)
+                    generate_certificate("lord-long.docx")
+                    print("Lord")
+                else:
+                    main(item, name)
+                    generate_certificate("lord.docx")
+                    print("Lord")
+            elif 'Lady Title' in product2:
+                item = 'Lady'
+                name = new['line_items'][1]['properties'][0]['value']
+                name = name.title()
+                if len(name)>19:
+                    main(item, name)
+                    generate_certificate("lady-long.docx")
+                    print("Lady")
+                else:
+                    main(item, name)
+                    generate_certificate("lady.docx")
+                    print("Lady")
+                print("Lady")
+            elif 'Lord & Lady' in product2:
+                item = 'Lady'
+                name = new['line_items'][1]['properties'][0]['value']
+                name = name.title()
+                if len(name)>19:
+                    main(item, name)
+                    generate_certificate("lady-long.docx")
+                    print("Lady")
+                else:
+                    main(item, name)
+                    generate_certificate("lady.docx")
+                    print("Lady")
+
+                
+                item = 'Lord'
+                name = new['line_items'][1]['properties'][1]['value']
+                name = name.title()
+                if len(name)>19:
+                    main(item, name)
+                    generate_certificate("lord-long.docx")
+                    print("Lord")
+                else:
+                    main(item, name)
+                    generate_certificate("lord.docx")
+                    print("Lord")
+
+
+            elif 'Baron Title' in product2:
+                item = 'Baron'
+                name = new['line_items'][1]['properties'][0]['value']
+                name = name.title()
+                if len(name)>19:
+                    main(item, name)
+                    generate_certificate("lord-long.docx")
+                    print("Baron")
+                else:
+                    main(item, name)
+                    generate_certificate("lord.docx")
+                    print("Baron")
+            elif 'Baroness Title' in product2:
+                item = 'Baroness'
+                name = new['line_items'][1]['properties'][0]['value']
+                name = name.title()
+                if len(name)>19:
+                    main(item, name)
+                    generate_certificate("lady-long.docx")
+                    print("Baroness")
+                else:
+                    main(item, name)
+                    generate_certificate("lady.docx")
+                    print("Baroness")
+                print("Baroness")
+            elif 'Baron & Baroness' in product2:
+                item = 'Baroness'
+                name = new['line_items'][1]['properties'][0]['value']
+                name = name.title()
+                if len(name)>19:
+                    main(item, name)
+                    generate_certificate("lady-long.docx")
+                    print("Baroness")
+                else:
+                    main(item, name)
+                    generate_certificate("lady.docx")
+                    print("Baroness")
+
+                
+                item = 'Baron'
+                name = new['line_items'][1]['properties'][1]['value']
+                name = name.title()
+                if len(name)>19:
+                    main(item, name)
+                    generate_certificate("lord-long.docx")
+                    print("Baron")
+                else:
+                    main(item, name)
+                    generate_certificate("lord.docx")
+                    print("Baron")
+
+        except:
+            continue
+        
+
+    i = i+1
+    time.sleep(5)
 

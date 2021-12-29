@@ -85,7 +85,6 @@ def main(item, name):
     starting6.space_before = Pt(0)
 
 
-
     Head_Break=doc.add_paragraph("_________________________________________________________________________________")
     Head_Break.space_before = Pt(0)
     Head_Break.space_after = Pt(0)
@@ -178,17 +177,6 @@ def main(item, name):
     p.paragraph_format.space_after = Pt(0)
 
 
-    # row4=table.add_row().cells
-    # p=row4[0].add_paragraph(" ")
-    # p.alignment=WD_ALIGN_PARAGRAPH.CENTER
-    # p.paragraph_format.space_before = Pt(0)
-    # p.paragraph_format.space_after = Pt(0)
-    # p=row4[1].add_paragraph(' ')
-    # p.alignment=WD_ALIGN_PARAGRAPH.CENTER
-    # p.paragraph_format.space_before = Pt(0)
-    # p.paragraph_format.space_after = Pt(0)
-
-
     row5=table.add_row().cells
     p=row5[0].add_paragraph(" ")
     p.alignment=WD_ALIGN_PARAGRAPH.CENTER
@@ -206,9 +194,8 @@ def main(item, name):
 
 
 
-def generate_certificate():
+def generate_certificate(file):
     buffer = BytesIO()
-
 
     pdfmetrics.registerFont(TTFont('times new roman', 'times new roman.ttf'))
     pdfmetrics.registerFont(TTFont('times new roman italic', 'times new roman italic.ttf'))
@@ -228,27 +215,20 @@ def generate_certificate():
     else:
         p.drawCentredString(x=300,y=390, text=item+" "+name)
 
-
-
     p.showPage()
     p.save()
 
-    #move to the beginning of the StringIO buffer
     buffer.seek(0)
     newPdf = PdfFileReader(buffer)
 
-
-    existingPdf = PdfFileReader(open('lord.pdf', 'rb'))
+    existingPdf = PdfFileReader(open(file, 'rb'))
     output = PdfFileWriter()
-    # add the "watermark" (which is the new pdf) on the existing page
     page = existingPdf.getPage(0)
     page.mergePage(newPdf.getPage(0))
     output.addPage(page)
-    # finally, write "output" to a real file
     outputStream = open("generated_files/"+"Certificate " +order_number+" "+name+".pdf", 'wb')
     output.write(outputStream)
     outputStream.close()
-
 
     return 1
 
@@ -260,153 +240,154 @@ for i in range(len(product)):
     product = new['line_items'][0]['name']
     
 
-    # product = response['order']['line_items'][0]['name']
     print(product)
     order_number = new['order_number']
     order_number = str(order_number)
 
+    try:
+        if 'Lord Title' in product:
+            item = 'Lord'
+            name = new['line_items'][0]['properties'][0]['value']
+            name = name.title().rstrip()
+            main(item, name)
+            generate_certificate("lord.pdf")
+            print(item)
+            print(name)
+        elif 'Lady Title' in product:
+            item = 'Lady'
+            name = new['line_items'][0]['properties'][0]['value']
+            name = name.title().rstrip()
+            main(item, name)
+            generate_certificate("lady.pdf")
+            print(item)
+            print(name)
+        elif 'Lord & Lady' in product:
+            item = 'Lady'
+            name = new['line_items'][0]['properties'][0]['value']
+            name = name.title().rstrip()
+            main(item, name)
+            generate_certificate("lady.pdf")
+            print(item)
+            print(name)
 
-    if 'Lord Title' in product:
-        item = 'Lord'
-        name = new['line_items'][0]['properties'][0]['value']
-        name = name.title().rstrip()
-        main(item, name)
-        generate_certificate()
-        print(item)
-        print(name)
-    elif 'Lady Title' in product:
-        item = 'Lady'
-        name = new['line_items'][0]['properties'][0]['value']
-        name = name.title().rstrip()
-        main(item, name)
-        generate_certificate()
-        print(item)
-        print(name)
-    elif 'Lord & Lady' in product:
-        item = 'Lady'
-        name = new['line_items'][0]['properties'][0]['value']
-        name = name.title().rstrip()
-        main(item, name)
-        generate_certificate()
-        print(item)
-        print(name)
+            
+            item = 'Lord'
+            name = new['line_items'][0]['properties'][1]['value']
+            name = name.title().rstrip()
+            main(item, name)
+            generate_certificate("lord.pdf")
+            print(item)
+            print(name)
 
-        
-        item = 'Lord'
-        name = new['line_items'][0]['properties'][1]['value']
-        name = name.title().rstrip()
-        main(item, name)
-        generate_certificate()
-        print(item)
-        print(name)
+        elif 'Baron Title' in product:
+            item = 'Baron'
+            name = new['line_items'][0]['properties'][0]['value']
+            name = name.title().rstrip()
+            main(item, name)
+            generate_certificate("lord.pdf")
+            print(item)
+            print(name)
+        elif 'Baroness Title' in product:
+            item = 'Baroness'
+            name = new['line_items'][0]['properties'][0]['value']
+            name = name.title().rstrip()
+            main(item, name)
+            generate_certificate("lady.pdf")
+            print(item)
+            print(name)
+        elif 'Baron & Baroness' in product:
+            item = 'Baroness'
+            name = new['line_items'][0]['properties'][0]['value']
+            name = name.title().rstrip()
+            main(item, name)
+            generate_certificate("lady.pdf")
+            print(item)
+            print(name)
 
-    elif 'Baron Title' in product:
-        item = 'Baron'
-        name = new['line_items'][0]['properties'][0]['value']
-        name = name.title().rstrip()
-        main(item, name)
-        generate_certificate()
-        print(item)
-        print(name)
-    elif 'Baroness Title' in product:
-        item = 'Baroness'
-        name = new['line_items'][0]['properties'][0]['value']
-        name = name.title().rstrip()
-        main(item, name)
-        generate_certificate()
-        print(item)
-        print(name)
-    elif 'Baron & Baroness' in product:
-        item = 'Baroness'
-        name = new['line_items'][0]['properties'][0]['value']
-        name = name.title().rstrip()
-        main(item, name)
-        generate_certificate()
-        print(item)
-        print(name)
-
-        
-        item = 'Baron'
-        name = new['line_items'][0]['properties'][1]['value']
-        name = name.title().rstrip()
-        main(item, name)
-        generate_certificate()
-        print(item)
-        print(name)
-
-
-    else:
-        try:
-            product2 = new['line_items'][1]['name']
+            
+            item = 'Baron'
+            name = new['line_items'][0]['properties'][1]['value']
+            name = name.title().rstrip()
+            main(item, name)
+            generate_certificate("lord.pdf")
+            print(item)
+            print(name)
 
 
-            if 'Lord Title' in product2:
-                item = 'Lord'
-                name = new['line_items'][1]['properties'][0]['value']
-                name = name.title().rstrip()
-                main(item, name)
-                generate_certificate()
-                print(item)
-                print(name)
-            elif 'Lady Title' in product2:
-                item = 'Lady'
-                name = new['line_items'][1]['properties'][0]['value']
-                name = name.title().rstrip()
-                generate_certificate()
-                print(item)
-                print(name)
-            elif 'Lord & Lady' in product2:
-                item = 'Lady'
-                name = new['line_items'][1]['properties'][0]['value']
-                name = name.title().rstrip()
-                generate_certificate()
-                print(item)
-                print(name)
-
-                
-                item = 'Lord'
-                name = new['line_items'][1]['properties'][1]['value']
-                name = name.title().rstrip()
-                generate_certificate()
-                print(item)
-                print(name)
+        else:
+            try:
+                product2 = new['line_items'][1]['name']
 
 
-            elif 'Baron Title' in product2:
-                item = 'Baron'
-                name = new['line_items'][1]['properties'][0]['value']
-                name = name.title().rstrip()
-                generate_certificate()
-                print(item)
-                print(name)
-            elif 'Baroness Title' in product2:
-                item = 'Baroness'
-                name = new['line_items'][1]['properties'][0]['value']
-                name = name.title().rstrip()
-                generate_certificate()
-                print(item)
-                print(name)
-                print("Baroness")
-            elif 'Baron & Baroness' in product2:
-                item = 'Baroness'
-                name = new['line_items'][1]['properties'][0]['value']
-                name = name.title().rstrip()
-                generate_certificate()
-                print(item)
-                print(name)
+                if 'Lord Title' in product2:
+                    item = 'Lord'
+                    name = new['line_items'][1]['properties'][0]['value']
+                    name = name.title().rstrip()
+                    main(item, name)
+                    generate_certificate("lord.pdf")
+                    print(item)
+                    print(name)
+                elif 'Lady Title' in product2:
+                    item = 'Lady'
+                    name = new['line_items'][1]['properties'][0]['value']
+                    name = name.title().rstrip()
+                    generate_certificate("lady.pdf")
+                    print(item)
+                    print(name)
+                elif 'Lord & Lady' in product2:
+                    item = 'Lady'
+                    name = new['line_items'][1]['properties'][0]['value']
+                    name = name.title().rstrip()
+                    generate_certificate("lady.pdf")
+                    print(item)
+                    print(name)
 
-                
-                item = 'Baron'
-                name = new['line_items'][1]['properties'][1]['value']
-                name = name.title().rstrip()
-                generate_certificate()
-                print(item)
-                print(name)
+                    
+                    item = 'Lord'
+                    name = new['line_items'][1]['properties'][1]['value']
+                    name = name.title().rstrip()
+                    generate_certificate("lord.pdf")
+                    print(item)
+                    print(name)
 
-        except:
-            continue
-        
 
-    i = i+1
-    time.sleep(5)
+                elif 'Baron Title' in product2:
+                    item = 'Baron'
+                    name = new['line_items'][1]['properties'][0]['value']
+                    name = name.title().rstrip()
+                    generate_certificate("lord.pdf")
+                    print(item)
+                    print(name)
+                elif 'Baroness Title' in product2:
+                    item = 'Baroness'
+                    name = new['line_items'][1]['properties'][0]['value']
+                    name = name.title().rstrip()
+                    generate_certificate("lady.pdf")
+                    print(item)
+                    print(name)
+                    print("Baroness")
+                elif 'Baron & Baroness' in product2:
+                    item = 'Baroness'
+                    name = new['line_items'][1]['properties'][0]['value']
+                    name = name.title().rstrip()
+                    generate_certificate("lady.pdf")
+                    print(item)
+                    print(name)
+
+                    
+                    item = 'Baron'
+                    name = new['line_items'][1]['properties'][1]['value']
+                    name = name.title().rstrip()
+                    generate_certificate("lord.pdf")
+                    print(item)
+                    print(name)
+
+            except:
+                continue
+            
+
+        i = i+1
+        time.sleep(5)
+    except IndexError:
+        continue
 
